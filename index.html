@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Business WhatsApp Finder — Free</title>
+  <meta name="description" content="Cari nomor telepon bisnis yang dipublikasikan secara terbuka dari sumber geospasial gratis.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div>
+        <h1>Business WhatsApp Finder</h1>
+        <p class="muted">Multi-source • Free tier • Fokus nomor kontak bisnis publik</p>
+      </div>
+      <span class="badge">FREE EDITION</span>
+    </header>
+
+    <section class="card">
+      <div class="grid">
+        <label>
+          Kata kunci usaha
+          <input id="keyword" placeholder="contoh: cafe, laundry, toko oleh-oleh" />
+        </label>
+        <label>
+          Lokasi
+          <input id="location" placeholder="contoh: Sidoarjo, Jawa Timur" />
+        </label>
+        <label>
+          Jumlah hasil
+          <select id="limit">
+            <option value="20">20</option>
+            <option value="40" selected>40</option>
+            <option value="60">60</option>
+            <option value="100">100</option>
+          </select>
+        </label>
+        <label>
+          Geoapify API Key
+          <input id="apiKey" type="password" placeholder="Tempel key gratis Geoapify" autocomplete="off" />
+        </label>
+      </div>
+      <div class="row">
+        <button id="searchBtn">🔎 Cari Nomor</button>
+        <button id="clearBtn" class="secondary">Bersihkan</button>
+        <button id="exportBtn" class="secondary" disabled>⬇ Export Excel</button>
+        <button id="copyBtn" class="secondary" disabled>📋 Copy Semua Nomor</button>
+      </div>
+      <p class="hint">API key hanya digunakan di browser kamu. Untuk keamanan, batasi key berdasarkan HTTP referrer/origin di dashboard Geoapify.</p>
+    </section>
+
+    <section id="status" class="status">Siap mencari.</section>
+
+    <section class="card">
+      <div class="stats">
+        <div><strong id="found">0</strong><span>Nomor unik</span></div>
+        <div><strong id="places">0</strong><span>Bisnis terdeteksi</span></div>
+        <div><strong id="sources">0</strong><span>Sumber</span></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th><th>Nomor</th><th>Nama Bisnis</th><th>Lokasi</th><th>Sumber</th><th>Link</th>
+            </tr>
+          </thead>
+          <tbody id="results"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <p>Data hanya berasal dari informasi yang dipublikasikan secara terbuka. Aplikasi tidak mengecek apakah nomor tertentu benar-benar memiliki akun WhatsApp.</p>
+    </footer>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
