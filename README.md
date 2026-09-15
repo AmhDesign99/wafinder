@@ -1,45 +1,37 @@
-# Business WhatsApp Finder V4 — Free Multi-Source
+# Business WhatsApp Finder — Apify Edition
 
-Web app static untuk mencari **nomor telepon seluler bisnis yang dipublikasikan secara terbuka**, lalu menormalkannya menjadi format Indonesia `62xxxxxxxxxx`.
+Versi online ringan untuk GitHub Pages. User memasukkan:
+- Keyword
+- Lokasi
+- Jumlah tempat
+- Apify API Token
 
-## Sumber
+Aplikasi menjalankan Actor `compass/crawler-google-places` melalui endpoint `run-sync-get-dataset-items`, lalu:
+1. mengambil field phone/contact yang tersedia,
+2. menormalisasi nomor Indonesia ke format `62...`,
+3. menyaring pola nomor seluler Indonesia,
+4. menghapus duplikat,
+5. menyediakan copy dan export Excel.
 
-1. **Geoapify Places + Place data berbasis OpenStreetMap**.
-2. **OpenStreetMap/Overpass** secara langsung sebagai jalur sumber kedua.
+## Pengaturan Actor yang dipakai
 
-Kedua jalur dapat menghasilkan data yang berasal dari OpenStreetMap; label sumber dipisahkan supaya pengguna tahu jalur pengambilannya.
+- `searchStringsArray`
+- `locationQuery`
+- `maxCrawledPlacesPerSearch`
+- `language: id`
+- mematikan social enrichment dan image enrichment.
 
-## Kenapa bukan langsung Google Maps?
+Dokumentasi Actor:
+https://apify.com/compass/crawler-google-places/input-schema
 
-Project ini ditujukan untuk biaya **Rp0 dalam batas layanan gratis**, sehingga tidak menggunakan Google Places API.
+## Penting soal gratis
 
-## Cara pakai
+Apify Free saat ini memberikan $5/bulan untuk penggunaan platform/Store. Actor Google Maps Scraper yang dipakai di sini memiliki harga Store sendiri (halaman Actor menunjukkan mulai dari $1.50 / 1,000 scraped places). Pada paket Free, jika kredit habis, akses diblok sampai siklus berikutnya; tidak otomatis menagihkan overage pada paket Free. Tetap cek halaman Billing sebelum penggunaan besar.
 
-1. Buat akun Geoapify gratis.
-2. Buat API key.
-3. Batasi key menggunakan HTTP referrer/origin pada dashboard Geoapify.
-4. Upload semua file ke repository GitHub public.
-5. Aktifkan GitHub Pages.
-6. Buka URL Pages.
-7. Masukkan API key di browser.
-8. Isi keyword dan lokasi.
-9. Klik **Cari Nomor**.
+## Keamanan token
 
-API key tidak ditulis ke source code. Namun karena aplikasi static memanggil Geoapify langsung dari browser, key secara teknis tetap terlihat pada network request. Karena itu gunakan pembatasan HTTP referrer/origin dan jangan memakai key untuk aplikasi lain.
+Versi GitHub Pages ini meminta token di browser. Token tidak boleh ditaruh di source code atau di-commit ke GitHub. Untuk penggunaan publik, arsitektur yang lebih aman adalah GitHub Pages + Cloudflare Worker/serverless proxy sehingga token disimpan sebagai secret di serverless.
 
-## Penting
+## WhatsApp
 
-- Aplikasi hanya mengambil nomor kontak yang tersedia secara publik.
-- Aplikasi **tidak** menguji apakah nomor tertentu memiliki akun WhatsApp.
-- Link `wa.me` dibentuk sebagai shortcut dari nomor telepon bisnis yang ditemukan; ini **bukan bukti** bahwa akun WhatsApp tersebut aktif.
-- Coverage bergantung pada data OpenStreetMap dan pembaruan kontributor.
-- Geoapify free plan saat ini menyediakan 3.000 credits/hari; biaya Places bergantung pada jumlah hasil. Jangan mengakali kuota atau melakukan bulk harvesting.
-- Overpass adalah layanan publik bersama. Gunakan secara wajar.
-
-## GitHub Pages
-
-Settings → Pages → Deploy from branch → `main` → `/ (root)` → Save.
-
-## Disclaimer
-
-Project ini adalah alat pencarian data bisnis publik. Gunakan hanya untuk kebutuhan yang sah, hormati ketentuan sumber data, privasi, dan kebijakan anti-spam.
+Nomor seluler bukan bukti bahwa nomor memiliki akun WhatsApp. Tombol `wa.me` hanya shortcut berdasarkan nomor yang ditemukan. Gunakan data untuk kontak bisnis yang sah dan patuhi ketentuan sumber.
